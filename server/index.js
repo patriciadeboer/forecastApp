@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
+const {db} = require('./db');
 
 app.use(morgan('dev'));
 
@@ -40,8 +41,20 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
 
-app.listen(PORT, () =>
-  console.log(`listening on port http://localhost:${PORT}`)
-);
+// // app.listen(PORT, () =>
+// //   console.log(`listening on port http://localhost:${PORT}`)
+// // );
+
+const init = async () => {
+  try {
+    await db.sync();
+    app.listen(PORT, () =>
+      console.log(`listening on port http://localhost:${PORT}`)
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+init();
 
 module.exports = app;

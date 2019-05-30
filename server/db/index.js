@@ -1,12 +1,12 @@
-const db = require('./database')
+const db = require('./db')
+const Cities =require('./cities')
+const Attractions = require('./attractions')
 
-// Project.belongsToMany(Robot, {through: 'assignments'})
-// Robot.belongsToMany(Project, {through: 'assignments'})
 
+Attractions.belongsTo(Cities, {as:'location'})
 
-module.exports = {
-  // Include your models in this exports object as well!
+module.exports={
   db,
-  // Project,
-  // Robot,
+  Cities,
+  Attractions
 }
