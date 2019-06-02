@@ -8,8 +8,6 @@ router.get('/', async (req, res, next) => {
   try {
     //GET ALL CITIES
     let favCities = await Cities.findAll();
-    console.log(favCities[1].dataValues.city);
-    console.log(favCities[1].dataValues.country);
     res.json(favCities);
   } catch (err) {
     next(err);
@@ -40,5 +38,33 @@ router.get('/weather', async (req, res, next) => {
     next(err);
   }
 });
+
+router.get('/:city&:country', async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      `http://api.openweathermap.org/data/2.5/forecast?q=${
+        req.params.city
+      },${req.params.country}&APPID=${
+        process.env.WEATHERID
+      }&units=imperial`
+    );
+    res.json(data)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:city&:country/photos', async (req, res, next) => {
+  try {
+    console.log(req.params)
+    // if()
+    const {data} = await axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=953cecca1a42f7925c6c23fcb41528b9&tags=${req.params.country}&text=${req.params.city}&privacy_filter=1&safe_search=1&per_page=5&page=1&format=json&nojsoncallback=1`)
+    console.log(data)
+    console.log(data.photos.photo)
+    res.json(data)
+  } catch (err) {
+    next(err)
+  }
+})
 
 module.exports = router;
