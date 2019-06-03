@@ -18,6 +18,10 @@ body{
   margin:1rem
 }
 
+.jumbotronText{
+  text-align:center;
+}
+
 /* or turn off modules to false on webpack
 https://www.npmjs.com/package/css-loader change loader
 */

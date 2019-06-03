@@ -5,12 +5,13 @@ import { fetchCurrentWeather, fetchCities } from '../redux/favCities';
 import { connect } from 'react-redux';
 import { rubberBand } from 'react-animations';
 import styled, { keyframes } from 'styled-components';
+import { Jumbotron } from 'react-bootstrap';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import classNames from '../index.css'
 
 const RubberBand = styled.div`
-  animation: 2s ${keyframes`${rubberBand}`};
-  text-align:center
-  font-family: 'Gloria Hallelujah', cursive;
-  margin:1rem;`;
+  animation: 2s ${keyframes`${rubberBand}`}`;
 
 export class Root extends Component {
   componentDidMount() {
@@ -18,13 +19,15 @@ export class Root extends Component {
     this.props.fetchAllCurrentWeather();
   }
   render() {
+    AOS.init();
     return (
       <Router>
         <div className="main">
-          <RubberBand>
-            <h1>🌈 Patricia's City Weather App ⛅</h1>
-          </RubberBand>
-
+          <Jumbotron className={classNames.jumbotronText}>
+            <RubberBand>
+              <h1>🌈 Weather App ⛅</h1>
+            </RubberBand>
+          </Jumbotron>
           <FavCities />
         </div>
       </Router>

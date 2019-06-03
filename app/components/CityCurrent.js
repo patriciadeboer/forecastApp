@@ -6,6 +6,9 @@ import Axios from 'axios';
 import './CityCurrent.css';
 import ReactRain from 'react-rain-animation';
 import classNames from '../index.css'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 export class CityCurrent extends Component {
   constructor() {
@@ -33,8 +36,9 @@ export class CityCurrent extends Component {
   }
   render() {
     console.log(this.state.cityImg);
+    AOS.init();
     return (
-      <div>
+      <div data-aos="flip-down">
 
         <Card className={classNames.cardTile} bg="info" text="white" style={{ width: '18rem' }}>
           <Card.Img
