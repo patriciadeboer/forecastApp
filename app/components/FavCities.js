@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import CityCurrent from './CityCurrent';
 import CardGroup from 'react-bootstrap/CardGroup';
 import CardDeck from 'react-bootstrap/CardDeck';
+import classNames from '../index.css'
 
 export const FavCities = props => {
   return (
     <div>
-      <CardDeck>
+      <CardDeck className={classNames.centeredCardDeck}>
         {props.favCities.map(city => (
           <CityCurrent key={city.id} city={city} />
         ))}

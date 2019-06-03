@@ -3,7 +3,9 @@ import Button from 'react-bootstrap/Button';
 require('../../secrets');
 import React, { Component } from 'react';
 import Axios from 'axios';
-import './CityCurrent.css'
+import './CityCurrent.css';
+import ReactRain from 'react-rain-animation';
+import classNames from '../index.css'
 
 export class CityCurrent extends Component {
   constructor() {
@@ -33,8 +35,13 @@ export class CityCurrent extends Component {
     console.log(this.state.cityImg);
     return (
       <div>
-        <Card bg="info" text="white" style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={this.state.cityImg} style={{height:'11rem'}}/>
+
+        <Card className={classNames.cardTile} bg="info" text="white" style={{ width: '18rem' }}>
+          <Card.Img
+            variant="top"
+            src={this.state.cityImg}
+            style={{ height: '11rem' }}
+          />
           {/* <Card.ImgOverlay> */}
           <Card.Body>
             <Card.Title>{this.props.city.name}</Card.Title>

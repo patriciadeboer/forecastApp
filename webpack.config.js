@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   entry: ['@babel/polyfill', './app/main.js'], // assumes your entry point is the index.js in the root of your project folder
   mode: 'development',
@@ -20,7 +22,13 @@ module.exports = {
         test: /\.css$/,
         use: [
           'style-loader',
-          { loader: 'css-loader', options: { modules: true } },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName:'[path][name]__[local]--[hash:base64:5]'
+            },
+          },
         ],
       },
     ],

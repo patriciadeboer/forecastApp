@@ -12,10 +12,6 @@ const RubberBand = styled.div`
   font-family: 'Gloria Hallelujah', cursive;
   margin:1rem;`;
 
-const Center = styled.div`
-  margin: 0 3rem
-`;
-
 export class Root extends Component {
   componentDidMount() {
     this.props.fetchAllCities();
@@ -24,12 +20,13 @@ export class Root extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="main">
           <RubberBand>
             <h1>🌈 Patricia's City Weather App ⛅</h1>
           </RubberBand>
+
+          <FavCities />
         </div>
-        <Center><FavCities /></Center>
       </Router>
     );
   }

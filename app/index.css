@@ -1,7 +1,23 @@
 body{
-  background-color: orange;
+  background-color: gray;
 }
-
+/*
 .card-img-top {
   height: 1rem;
+} */
+/*
+:global(.card-deck){
+  justify-content: center;
+} */
+.centeredCardDeck{
+  justify-content: center;
+  align-items:center
 }
+
+.cardTile{
+  margin:1rem
+}
+
+/* or turn off modules to false on webpack
+https://www.npmjs.com/package/css-loader change loader
+*/
