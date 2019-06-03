@@ -19,8 +19,9 @@ const seed = async () => {
       city: 'Orlando',
     });
 
-    const charlotte = await Cities.create({
-      city: 'Charlotte',
+    const athens = await Cities.create({
+      city: 'Athens',
+      country: 'GR'
     });
 
     const giza = await Cities.create({
