@@ -9,6 +9,7 @@ import { Jumbotron } from 'react-bootstrap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import classNames from '../index.css'
+import NewCity from './NewCity'
 
 const RubberBand = styled.div`
   animation: 2s ${keyframes`${rubberBand}`}`;
@@ -23,10 +24,12 @@ export class Root extends Component {
     return (
       <Router>
         <div className="main">
-          <Jumbotron className={classNames.jumbotronText}>
+          <Jumbotron className={classNames.jumbotron}>
             <RubberBand>
               <h1>🌈 Weather App ⛅</h1>
+              <p>Current weather in your favorite cities</p>
             </RubberBand>
+            <NewCity />
           </Jumbotron>
           <FavCities />
         </div>

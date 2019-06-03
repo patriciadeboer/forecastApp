@@ -1,14 +1,14 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { Collapse } from 'react-bootstrap';
 require('../../secrets');
 import React, { Component } from 'react';
 import Axios from 'axios';
 import './CityCurrent.css';
 import ReactRain from 'react-rain-animation';
-import classNames from '../index.css'
+import classNames from '../index.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
 
 export class CityCurrent extends Component {
   constructor() {
@@ -16,6 +16,7 @@ export class CityCurrent extends Component {
     this.state = {
       cityImg: undefined,
       weatherIcon: undefined,
+      open: false,
     };
   }
   async componentDidMount() {
@@ -39,8 +40,12 @@ export class CityCurrent extends Component {
     AOS.init();
     return (
       <div data-aos="flip-down">
-
-        <Card className={classNames.cardTile} bg="info" text="white" style={{ width: '18rem' }}>
+        <Card
+          className={classNames.cardTile}
+          bg="info"
+          text="white"
+          style={{ width: '18rem' }}
+        >
           <Card.Img
             variant="top"
             src={this.state.cityImg}
@@ -58,10 +63,20 @@ export class CityCurrent extends Component {
               <br />
               Humidity: {this.props.city.main.humidity}%
             </Card.Text>
-            <Button variant="light">See Forecast</Button>
+            <Button
+              variant="light"
+              onClick={() => this.setState({ open: !this.state.open })}
+              aria-controls="example-text"
+              aria-expanded={open}
+            >
+              See Forecast
+            </Button>
           </Card.Body>
           {/* </Card.ImgOverlay> */}
         </Card>
+        <Collapse in={this.state.open}>
+          <div id="example-text">Test</div>
+        </Collapse>
       </div>
     );
   }

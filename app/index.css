@@ -1,5 +1,5 @@
 body{
-  background-color: gray;
+  background-color: darkslategrey;
 }
 /*
 .card-img-top {
@@ -18,8 +18,14 @@ body{
   margin:1rem
 }
 
-.jumbotronText{
-  text-align:center;
+.jumbotron{
+  background-image:url('../public/imgs/darkclouds.jpg');
+  background-size:cover;
+  display:flex;
+  justify-content: space-around;
+  /* height: 30vh; */
+  align-content: center;
+  padding: 2rem;
 }
 
 /* or turn off modules to false on webpack
