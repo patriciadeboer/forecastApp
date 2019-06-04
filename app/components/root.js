@@ -26,8 +26,9 @@ export class Root extends Component {
         <div className="main">
           <Jumbotron className={classNames.jumbotron}>
             <RubberBand>
-              <h1>🌈 Weather App ⛅</h1>
+              <h1> Weather Info</h1>
               <p>Current weather in your favorite cities</p>
+              <h1>⛅🌈</h1>
             </RubberBand>
             <NewCity />
           </Jumbotron>

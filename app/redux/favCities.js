@@ -12,12 +12,19 @@ export const getCities = cities => ({
   cities,
 });
 
-export const GET_CURRENT_WEATHER = 'GET_CURRENT_WEATHER'
+export const GET_CURRENT_WEATHER = 'GET_CURRENT_WEATHER';
 
-export const getCurrentWeather = (weather) => ({
+export const getCurrentWeather = weather => ({
   type: GET_CURRENT_WEATHER,
-  weather
-})
+  weather,
+});
+
+export const GOT_NEW_CITY = 'GOT_NEW_CITY';
+
+export const gotNewCity = city => ({
+  type: GOT_NEW_CITY,
+  city,
+});
 
 export const fetchCities = () => async dispatch => {
   try {
@@ -31,13 +38,25 @@ export const fetchCities = () => async dispatch => {
 
 export const fetchCurrentWeather = () => async dispatch => {
   try {
-    const response = await Axios.get('/api/cities/weather')
+    const response = await Axios.get('/api/cities/weather');
     const weather = response.data;
-    dispatch(getCurrentWeather(weather))
+    dispatch(getCurrentWeather(weather));
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
-}
+};
+
+export const newCity = cityInput => async dispatch => {
+  try {
+    console.log(cityInput);
+    const response = await Axios.post('/api/cities', cityInput);
+    const city = response.data;
+    dispatch(gotNewCity(city));
+    dispatch(fetchCurrentWeather())
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 export const favCities = (state = initialState, action) => {
   switch (action.type) {
@@ -45,6 +64,8 @@ export const favCities = (state = initialState, action) => {
       return { ...state, cities: action.cities };
     case GET_CURRENT_WEATHER:
       return { ...state, weather: action.weather };
+    case GOT_NEW_CITY:
+      return {...state, cities: state.cities.concat(action.city)};
     default:
       return state;
   }

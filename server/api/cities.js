@@ -54,6 +54,15 @@ router.get('/:city&:country', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    const city=await Cities.create(req.body)
+    res.send(city)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // router.get('/:city&:country/photos', async (req, res, next) => {
 //   try {
 //     console.log(req.params)

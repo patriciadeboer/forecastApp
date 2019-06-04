@@ -7,7 +7,7 @@ import store from './store';
 //Components
 import Root from './components/root';
 import className from './index.css';
-console.log(className)
+//console.log(className)
 render(
   <Provider store={store}>
     <Root />

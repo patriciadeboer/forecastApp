@@ -25,7 +25,7 @@ export class CityCurrent extends Component {
         this.props.city.name
       }&orientation=landscape&client_id=${process.env.PICSID}`
     );
-    console.log(data);
+    //console.log(data);
     // console.log(data.results[0].urls.small)
     // this.state.cityImg = data.results[0].urls.small
     this.setState({
@@ -36,7 +36,6 @@ export class CityCurrent extends Component {
     });
   }
   render() {
-    console.log(this.state.cityImg);
     AOS.init();
     return (
       <div data-aos="flip-down">
