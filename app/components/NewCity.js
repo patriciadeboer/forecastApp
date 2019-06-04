@@ -23,16 +23,17 @@ export class NewCity extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const newCity = this.state.city;
-    const newCountry = this.state.country==='' ? this.state.country : 'US';
+    // const newCity = this.state.city;
+    // const newCountry = this.state.country==='' ? this.state.country : 'US';
 
     this.props.addCity(this.state);
-    // this.props.updateWeather();
+
 
     this.setState({
-      country: undefined,
+      country: '',
       city: '',
     });
+
   }
 
   render() {
@@ -58,7 +59,7 @@ export class NewCity extends Component {
               placeholder="Enter Country"
             />
             <Form.Text className="text-muted">
-              If left blank, will default to US
+              Enter ISO or full Name of country
             </Form.Text>
           </Form.Group>
           <Button variant="primary" type="submit">

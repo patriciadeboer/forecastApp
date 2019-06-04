@@ -9,7 +9,7 @@ export const FavCities = props => {
   return (
     <div>
       <CardDeck className={classNames.centeredCardDeck}>
-        {props.favCities.map(city => (
+        {props.favCities.reverse().map(city => (
           <CityCurrent key={city.id} city={city} />
         ))}
       </CardDeck>
