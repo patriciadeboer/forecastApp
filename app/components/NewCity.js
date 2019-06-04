@@ -8,7 +8,7 @@ export class NewCity extends Component {
   constructor() {
     super();
     this.state = {
-      country: '',
+      country: undefined,
       city: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -24,13 +24,13 @@ export class NewCity extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const newCity = this.state.city;
-    const newCountry = this.state.country;
+    const newCountry = this.state.country==='' ? this.state.country : 'US';
 
     this.props.addCity(this.state);
-    this.props.updateWeather();
+    // this.props.updateWeather();
 
     this.setState({
-      country: '',
+      country: undefined,
       city: '',
     });
   }

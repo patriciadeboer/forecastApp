@@ -28,7 +28,7 @@ export class Root extends Component {
             <RubberBand>
               <h1> Weather Info</h1>
               <p>Current weather in your favorite cities</p>
-              <h1>⛅🌈</h1>
+              <h1>☀️ ⛅ 🌧️ ⛈️ 🌈</h1>
             </RubberBand>
             <NewCity />
           </Jumbotron>

@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { Collapse } from 'react-bootstrap';
+import { Collapse, Jumbotron } from 'react-bootstrap';
 require('../../secrets');
 import React, { Component } from 'react';
 import Axios from 'axios';
@@ -74,7 +74,7 @@ export class CityCurrent extends Component {
           {/* </Card.ImgOverlay> */}
         </Card>
         <Collapse in={this.state.open}>
-          <div id="example-text">Test</div>
+          <div className={classNames.full}>Test</div>
         </Collapse>
       </div>
     );

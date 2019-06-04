@@ -31,3 +31,8 @@ body{
 /* or turn off modules to false on webpack
 https://www.npmjs.com/package/css-loader change loader
 */
+
+.full{
+  width:100vw;
+  background-color:blue;
+}
