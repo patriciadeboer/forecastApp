@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import FavCities from './FavCities';
-import { fetchCurrentWeather, fetchCities } from '../redux/favCities';
+import { fetchCurrentWeather, fetchCities, fetchForecast } from '../redux/favCities';
 import { connect } from 'react-redux';
 import { rubberBand } from 'react-animations';
 import styled, { keyframes } from 'styled-components';
@@ -18,6 +18,7 @@ export class Root extends Component {
   componentDidMount() {
     this.props.fetchAllCities();
     this.props.fetchAllCurrentWeather();
+    this.props.fetchAllForecast();
   }
   render() {
     AOS.init();
@@ -47,6 +48,7 @@ const mapDispatch = dispatch => {
   return {
     fetchAllCities: () => dispatch(fetchCities()),
     fetchAllCurrentWeather: () => dispatch(fetchCurrentWeather()),
+    fetchAllForecast:()=>dispatch(fetchForecast())
   };
 };
 export default connect(

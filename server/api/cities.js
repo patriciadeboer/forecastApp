@@ -54,6 +54,31 @@ router.get('/:city&:country', async (req, res, next) => {
   }
 })
 
+router.get('/forecast', async (req, res, next) => {
+  try {
+    let favCities = await Cities.findAll();
+    const getForecast = async () => {
+      return Promise.all(
+        favCities.map(async city => {
+          const { data } = await axios.get(
+            `http://api.openweathermap.org/data/2.5/forecast?q=${
+              city.dataValues.city
+            },${city.dataValues.country}&APPID=${
+              process.env.WEATHERID
+            }&units=imperial`
+          );
+          return data;
+        })
+      );
+    };
+    let forecast = await getForecast();
+    console.log(forecast)
+    res.json(forecast);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post('/', async (req, res, next) => {
   try {
     const city=await Cities.create(req.body)

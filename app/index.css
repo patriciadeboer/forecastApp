@@ -18,6 +18,10 @@ body{
   margin:1rem
 }
 
+h4{
+  color:white;
+}
+
 .jumbotron{
   background-image:url('../public/imgs/darkclouds.jpg');
   background-size:cover;
