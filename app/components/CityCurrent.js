@@ -32,21 +32,44 @@ export class CityCurrent extends Component {
   async componentDidMount() {
     const { data } = await Axios.get(
       `https://api.unsplash.com/search/photos?page=1&query=${
-        this.props.city.name
+        this.props.city[0].name
       }&orientation=landscape&client_id=${process.env.PICSID}`
     );
     //console.log(data);
     // console.log(data.results[0].urls.small)
     // this.state.cityImg = data.results[0].urls.small
+    // this.props.fetchCurrentForecast(this.props.city[0].id);
+
     this.setState({
       cityImg: data.results[0].urls.small,
       weatherIcon: `http://openweathermap.org/img/w/${
-        this.props.city.weather[0].icon
+        this.props.city[0].weather[0].icon
       }.png`,
     });
   }
   render() {
+    // console.log(this.props.city[1].list[0].weather[0].description)
     AOS.init();
+
+    const listElements = [];
+    for (let i = 0; i < 40; i += 8) {
+      let timestamp = this.props.city[1].list[i].dt;
+      var xx = new Date();
+      xx.setTime(timestamp * 1000);
+      let day= xx.getDay();
+      console.log(day)
+      listElements.push(
+        <ListGroup.Item key={this.props.city[1].list[i].dt}>
+          <img
+            src={`http://openweathermap.org/img/w/${
+              this.props.city[1].list[i].weather[0].icon
+            }.png`}
+            alt="icon"
+          />
+          {this.props.city[1].list[i].weather[0].description}
+        </ListGroup.Item>
+      );
+    }
     return (
       <ReactCardFlip
         isFlipped={this.state.isFlipped}
@@ -66,15 +89,15 @@ export class CityCurrent extends Component {
             />
             {/* <Card.ImgOverlay> */}
             <Card.Body>
-              <Card.Title>{this.props.city.name}</Card.Title>
+              <Card.Title>{this.props.city[0].name}</Card.Title>
               <Card.Subtitle>
                 <img src={this.state.weatherIcon} alt="icon" />
-                {this.props.city.weather[0].description}
+                {this.props.city[0].weather[0].description}
               </Card.Subtitle>
               <Card.Text>
-                Current Temp: {this.props.city.main.temp}&deg;F
+                Current Temp: {this.props.city[0].main.temp}&deg;F
                 <br />
-                Humidity: {this.props.city.main.humidity}%
+                Humidity: {this.props.city[0].main.humidity}%
               </Card.Text>
               <Button variant="light" onClick={this.handleClick}>
                 See Forecast
@@ -91,16 +114,11 @@ export class CityCurrent extends Component {
             style={{ width: '18rem' }}
           >
             <Card.Body>
-              <Card.Title>{this.props.city.name}</Card.Title>
-              <Card.Text>Forecast for next 5 days:</Card.Text>
+              <Card.Text>
+                <strong>{this.props.city[0].name} 5-day forecast:</strong>
+              </Card.Text>
             </Card.Body>
-            <ListGroup>
-              <ListGroup.Item>Day 1 Weather</ListGroup.Item>
-              <ListGroup.Item>Day 2 Weather</ListGroup.Item>
-              <ListGroup.Item>Day 3 Weather</ListGroup.Item>
-              <ListGroup.Item>Day 4 Weather</ListGroup.Item>
-              <ListGroup.Item>Day 5 Weather</ListGroup.Item>
-            </ListGroup>
+            <ListGroup>{listElements}</ListGroup>
             <Card.Body>
               <Button variant="primary" onClick={this.handleClick}>
                 See Current Weather
@@ -113,14 +131,17 @@ export class CityCurrent extends Component {
   }
 }
 
+const mapState = state => {
+  return { singleCity: state.singleCity };
+};
+
 const mapDispatch = dispatch => {
   return {
-    fetchCurrentForecast: (city, country) =>
-      dispatch(fetchCityForecast(city, country)),
+    fetchCurrentForecast: cityId => dispatch(fetchCityForecast(cityId)),
   };
 };
 
 export default connect(
-  null,
+  mapState,
   mapDispatch
 )(CityCurrent);

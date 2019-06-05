@@ -20,14 +20,14 @@ router.get('/weather', async (req, res, next) => {
     const getWeather = async () => {
       return Promise.all(
         favCities.map(async city => {
-          const { data } = await axios.get(
+          const weather = await axios.get(
             `http://api.openweathermap.org/data/2.5/weather?q=${
               city.dataValues.city
             },${city.dataValues.country}&APPID=${
               process.env.WEATHERID
             }&units=imperial`
           );
-          return data;
+          return weather.data;
         })
       );
     };
@@ -39,45 +39,91 @@ router.get('/weather', async (req, res, next) => {
   }
 });
 
-router.get('/:city&:country', async (req, res, next) => {
-  try {
-    const { data } = await axios.get(
-      `http://api.openweathermap.org/data/2.5/forecast?q=${
-        req.params.city
-      },${req.params.country}&APPID=${
-        process.env.WEATHERID
-      }&units=imperial`
-    );
-    res.json(data)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get('/forecast', async (req, res, next) => {
+router.get('/allWeather', async (req, res, next) => {
   try {
     let favCities = await Cities.findAll();
-    const getForecast = async () => {
+    const getWeather = async () => {
       return Promise.all(
         favCities.map(async city => {
-          const { data } = await axios.get(
+          const cityName= city.dataValues.city;
+          const weather = await axios.get(
+            `http://api.openweathermap.org/data/2.5/weather?q=${
+              city.dataValues.city
+            },${city.dataValues.country}&APPID=${
+              process.env.WEATHERID
+            }&units=imperial`
+          );
+          const forecast = await axios.get(
             `http://api.openweathermap.org/data/2.5/forecast?q=${
               city.dataValues.city
             },${city.dataValues.country}&APPID=${
               process.env.WEATHERID
             }&units=imperial`
           );
-          return data;
+          return [weather.data,forecast.data];
         })
       );
     };
-    let forecast = await getForecast();
-    console.log(forecast)
-    res.json(forecast);
+    let weather = await getWeather();
+    //console.log(weather)
+    res.json(weather);
   } catch (err) {
     next(err);
   }
 });
+// router.get('/forecast', async (req, res, next) => {
+//   try {
+//     let favCities = await Cities.findAll();
+//     const getForecast = async () => {
+//       return Promise.all(
+//         favCities.map(async city => {
+//           const { data } = await axios.get(
+//             `http://api.openweathermap.org/data/2.5/forecast?q=${
+//               city.dataValues.city
+//             },${city.dataValues.country}&APPID=${
+//               process.env.WEATHERID
+//             }&units=imperial`
+//           );
+//           return data;
+//         })
+//       );
+//     };
+//     let forecast = await getForecast();
+//     //console.log(weather)
+//     res.json(forecast);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+// router.get('/:city&:country', async (req, res, next) => {
+//   try {
+//     const { data } = await axios.get(
+//       `http://api.openweathermap.org/data/2.5/forecast?q=${
+//         req.params.city
+//       },${req.params.country}&APPID=${
+//         process.env.WEATHERID
+//       }&units=imperial`
+//     );
+//     res.json(data)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
+router.get('/:cityId', async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      `http://api.openweathermap.org/data/2.5/forecast?id=${req.params.cityId}&APPID=${
+        process.env.WEATHERID
+      }&units=imperial`
+    );
+    res.json(data)
+  } catch (err) {
+    console.log(req.params.cityId)
+    next(err)
+  }
+})
 
 router.post('/', async (req, res, next) => {
   try {

@@ -7,9 +7,10 @@ export const getCityForecast = (cityForecast) => ({
   cityForecast
 })
 
-export const fetchCityForecast = (city,country) => async dispatch => {
+export const fetchCityForecast = (cityId) => async dispatch => {
   try {
-    const response = await Axios.get(`api/cities/${city}&${country}`)
+    //const country =
+    const response = await Axios.get(`api/cities/${cityId}`)
     const forecast = response.data;
     dispatch(getCityForecast(forecast))
   } catch (err) {

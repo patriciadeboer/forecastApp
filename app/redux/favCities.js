@@ -3,7 +3,8 @@ import Axios from 'axios';
 const initialState = {
   cities: [],
   weather: [],
-  forecast: []
+  forecast: [],
+  allWeather:[]
 };
 
 export const GET_CITIES = 'GET_CITIES';
@@ -27,6 +28,12 @@ export const getForecast = forecast => ({
   forecast,
 });
 
+export const GET_ALL_WEATHER = 'GET_ALL_WEATHER'
+
+export const getAllWeather = (allWeather) => ({
+  type: GET_ALL_WEATHER,
+  allWeather
+})
 export const GOT_NEW_CITY = 'GOT_NEW_CITY';
 
 export const gotNewCity = city => ({
@@ -64,6 +71,17 @@ export const fetchForecast = () => async dispatch => {
   }
 };
 
+export const fetchAllWeather = () => async dispatch => {
+  try {
+    const response = await Axios.get('/api/cities/allWeather');
+    const allWeather = response.data;
+    dispatch(getAllWeather(allWeather));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
 export const newCity = cityInput => async dispatch => {
   try {
     console.log(cityInput);
@@ -84,6 +102,8 @@ export const favCities = (state = initialState, action) => {
       return { ...state, weather: action.weather };
     case GET_FORECAST:
       return { ...state, forecast: action.forecast };
+    case GET_ALL_WEATHER:
+      return { ...state, allWeather: action.allWeather };
     case GOT_NEW_CITY:
       return { ...state, cities: state.cities.concat(action.city) };
     default:
