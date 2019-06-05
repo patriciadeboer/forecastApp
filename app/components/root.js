@@ -17,7 +17,7 @@ const RubberBand = styled.div`
 export class Root extends Component {
   componentDidMount() {
     this.props.fetchAllCities();
-    this.props.fetchAllCurrentWeather();
+    // this.props.fetchAllCurrentWeather();
     this.props.fetchAllWeather();
   }
   render() {

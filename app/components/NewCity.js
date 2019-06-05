@@ -8,7 +8,7 @@ export class NewCity extends Component {
   constructor() {
     super();
     this.state = {
-      country: undefined,
+      country: '',
       city: '',
     };
     this.handleChange = this.handleChange.bind(this);
