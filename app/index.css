@@ -27,7 +27,9 @@ body{
   padding: .1rem .5rem;
   height:2rem;
 }
-
+.loading{
+  display:none;
+}
 h4{
   color:white;
 }

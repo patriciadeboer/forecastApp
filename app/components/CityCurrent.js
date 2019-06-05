@@ -12,6 +12,10 @@ import 'aos/dist/aos.css';
 import ReactCardFlip from 'react-card-flip';
 import { removeCity } from '../redux/favCities';
 import { connect } from 'react-redux';
+import ReactLoading from 'react-loading';
+// import {Spinner} from 'belle'
+// let belle = require('belle');
+// let Spinner = belle.Spinner;
 
 export class CityCurrent extends Component {
   constructor() {
@@ -20,6 +24,7 @@ export class CityCurrent extends Component {
       cityImg: undefined,
       weatherIcon: undefined,
       isFlipped: false,
+      loading: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.dayOfWeekAsString = this.dayOfWeekAsString.bind(this);
@@ -35,10 +40,15 @@ export class CityCurrent extends Component {
     return ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'][dayIndex];
   }
 
-  handleDelete() {
+  async handleDelete() {
+    this.setState({ loading: true });
     const city = this.props.city[0].name;
     const country = this.props.country;
-    this.props.deleteCity(city, country);
+    await setTimeout(() => {
+      // this.setState({ loading: false });
+      this.props.deleteCity(city, country);
+    }, 600);
+    // this.props.deleteCity(city, country);
   }
 
   async componentDidMount() {
@@ -119,7 +129,7 @@ export class CityCurrent extends Component {
                   {this.props.city[0].weather[0].description}
                 </Card.Subtitle>
                 <Card.Text>
-                  Current Temp: {this.props.city[0].main.temp}&deg;F
+                  Current Temp: {Math.floor(this.props.city[0].main.temp)}&deg;F
                   <br />
                   Humidity: {this.props.city[0].main.humidity}%
                 </Card.Text>
@@ -128,8 +138,12 @@ export class CityCurrent extends Component {
                 variant="warning"
                 className={classNames.deleteButton}
                 onClick={this.handleDelete}
+                disabled={this.state.loading}
               >
-                X
+                {!this.state.loading && 'X'}
+                {this.state.loading && (
+                  <ReactLoading width={30} type="bubbles" color="#fff" />
+                )}
               </Button>
             </Card.Body>
             <Card.Body>
