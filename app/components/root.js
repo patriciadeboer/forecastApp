@@ -47,7 +47,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchAllCities: () => dispatch(fetchCities()),
-    fetchAllCurrentWeather: () => dispatch(fetchCurrentWeather()),
+    // fetchAllCurrentWeather: () => dispatch(fetchCurrentWeather()),
     fetchAllWeather:()=>dispatch(fetchAllWeather())
   };
 };

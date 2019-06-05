@@ -10,7 +10,7 @@ import classNames from '../index.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ReactCardFlip from 'react-card-flip';
-import { fetchCityForecast } from '../redux/singleCity';
+import { removeCity } from '../redux/favCities';
 import { connect } from 'react-redux';
 
 export class CityCurrent extends Component {
@@ -23,6 +23,7 @@ export class CityCurrent extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.dayOfWeekAsString = this.dayOfWeekAsString.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleClick(event) {
@@ -31,7 +32,13 @@ export class CityCurrent extends Component {
   }
 
   dayOfWeekAsString(dayIndex) {
-    return ["Mon","Tues","Wed","Thurs","Fri","Sat","Sun"][dayIndex];
+    return ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'][dayIndex];
+  }
+
+  handleDelete() {
+    const city = this.props.city[0].name;
+    const country = this.props.country;
+    this.props.deleteCity(city, country);
   }
 
   async componentDidMount() {
@@ -61,23 +68,26 @@ export class CityCurrent extends Component {
       let timestamp = this.props.city[1].list[i].dt;
       var xx = new Date();
       xx.setTime(timestamp * 1000);
-      let day= xx.getDay();
-      let dayStr = this.dayOfWeekAsString(day)
-      if(i===0){
-        dayStr='Tomorrow';
+      let day = xx.getDay();
+      let dayStr = this.dayOfWeekAsString(day);
+      if (i === 0) {
+        dayStr = 'Tomorrow';
       }
-      const temp = Math.floor(this.props.city[1].list[i].main.temp)
+      const temp = Math.floor(this.props.city[1].list[i].main.temp);
 
       listElements.push(
-        <ListGroup.Item key={this.props.city[1].list[i].dt} className={classNames.ListGroupText}>
-          {`${dayStr}:`}<img
+        <ListGroup.Item
+          key={this.props.city[1].list[i].dt}
+          className={classNames.ListGroupText}
+        >
+          {`${dayStr}:`}
+          <img
             src={`http://openweathermap.org/img/w/${
               this.props.city[1].list[i].weather[0].icon
             }.png`}
             alt="icon"
           />
-          {`${this.props.city[1].list[i].weather[0].description} `}
-          ~{temp}&deg;F
+          {`${this.props.city[1].list[i].weather[0].description} `}~{temp}&deg;F
         </ListGroup.Item>
       );
     }
@@ -86,7 +96,7 @@ export class CityCurrent extends Component {
         isFlipped={this.state.isFlipped}
         flipDirection="horizontal"
       >
-        <div data-aos="flip-down" key="front">
+        <div data-aos="flip-up" key="front">
           <Card
             className={classNames.cardTile}
             bg="primary"
@@ -98,26 +108,39 @@ export class CityCurrent extends Component {
               src={this.state.cityImg}
               style={{ height: '11rem' }}
             />
-            {/* <Card.ImgOverlay> */}
+            {/* <Card.ImgOverlay className={classNames.delete}> */}
+
+            {/* </Card.ImgOverlay> */}
+            <Card.Body className={classNames.weatherCard}>
+              <Card.Body>
+                <Card.Title>{this.props.city[0].name}</Card.Title>
+                <Card.Subtitle>
+                  <img src={this.state.weatherIcon} alt="icon" />
+                  {this.props.city[0].weather[0].description}
+                </Card.Subtitle>
+                <Card.Text>
+                  Current Temp: {this.props.city[0].main.temp}&deg;F
+                  <br />
+                  Humidity: {this.props.city[0].main.humidity}%
+                </Card.Text>
+              </Card.Body>
+              <Button
+                variant="warning"
+                className={classNames.deleteButton}
+                onClick={this.handleDelete}
+              >
+                X
+              </Button>
+            </Card.Body>
             <Card.Body>
-              <Card.Title>{this.props.city[0].name}</Card.Title>
-              <Card.Subtitle>
-                <img src={this.state.weatherIcon} alt="icon" />
-                {this.props.city[0].weather[0].description}
-              </Card.Subtitle>
-              <Card.Text>
-                Current Temp: {this.props.city[0].main.temp}&deg;F
-                <br />
-                Humidity: {this.props.city[0].main.humidity}%
-              </Card.Text>
-              <Button variant="light" onClick={this.handleClick}>
+              <Button variant="light" block onClick={this.handleClick}>
                 See Forecast
               </Button>
             </Card.Body>
             {/* </Card.ImgOverlay> */}
           </Card>
         </div>
-        <div data-aos="flip-down" key="back">
+        <div data-aos="flip-up" key="back">
           <Card
             className={classNames.cardTile}
             bg="light"
@@ -131,7 +154,7 @@ export class CityCurrent extends Component {
             </Card.Body>
             <ListGroup>{listElements}</ListGroup>
             <Card.Body>
-              <Button variant="primary" onClick={this.handleClick}>
+              <Button variant="primary" block onClick={this.handleClick}>
                 See Current Weather
               </Button>
             </Card.Body>
@@ -148,7 +171,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchCurrentForecast: cityId => dispatch(fetchCityForecast(cityId)),
+    deleteCity: (city, country) => dispatch(removeCity(city, country)),
   };
 };
 

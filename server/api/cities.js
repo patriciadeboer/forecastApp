@@ -60,7 +60,7 @@ router.get('/allWeather', async (req, res, next) => {
               process.env.WEATHERID
             }&units=imperial`
           );
-          return [weather.data,forecast.data];
+          return [weather.data,forecast.data,city.dataValues.city,city.dataValues.country];
         })
       );
     };
@@ -134,6 +134,19 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.delete('/:city&:country', async (req, res, next) => {
+  try {
+    await Cities.destroy({
+      where: {
+        city: req.params.city,
+        country: req.params.country
+      },
+    });
+    res.status(204).end();
+  } catch (err) {
+    next(err)
+  }
+})
 // router.get('/:city&:country/photos', async (req, res, next) => {
 //   try {
 //     console.log(req.params)
