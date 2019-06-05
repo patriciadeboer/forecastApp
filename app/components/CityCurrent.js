@@ -47,7 +47,7 @@ export class CityCurrent extends Component {
     await setTimeout(() => {
       // this.setState({ loading: false });
       this.props.deleteCity(city, country);
-    }, 600);
+    }, 500);
     // this.props.deleteCity(city, country);
   }
 

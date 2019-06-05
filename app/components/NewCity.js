@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import { newCity, fetchCurrentWeather } from '../redux/favCities';
+import ReactLoading from 'react-loading';
 
 export class NewCity extends Component {
   constructor() {
@@ -10,6 +11,7 @@ export class NewCity extends Component {
     this.state = {
       country: '',
       city: '',
+      loading: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,18 +25,21 @@ export class NewCity extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // const newCity = this.state.city;
-    // const newCountry = this.state.country==='' ? this.state.country : 'US';
-
+    this.setState({ loading: true });
     this.props.addCity(this.state);
 
-
+    // const newCity = this.state.city;
+    // const newCountry = this.state.country==='' ? this.state.country : 'US';
+    // await this.props.addCity(this.state);
     this.setState({
       country: '',
       city: '',
+      loading: false
     });
-
   }
+  // componentDidMount() {
+  //   this.setState({ loading: false });
+  // }
 
   render() {
     return (
@@ -62,8 +67,16 @@ export class NewCity extends Component {
               Enter ISO or full Name of country
             </Form.Text>
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Add City
+          <Button variant="primary" type="submit" disabled={this.state.loading}>
+            {!this.state.loading && 'Add City'}
+            {this.state.loading && (
+              <ReactLoading
+                width={50}
+                height={10}
+                type="bubbles"
+                color="#fff"
+              />
+            )}
           </Button>
         </Form>
       </div>
@@ -74,7 +87,7 @@ export class NewCity extends Component {
 const mapDispatch = dispatch => {
   return {
     addCity: cityInput => dispatch(newCity(cityInput)),
-    updateWeather: ()=> dispatch(fetchCurrentWeather())
+    updateWeather: () => dispatch(fetchCurrentWeather()),
   };
 };
 
