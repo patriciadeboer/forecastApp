@@ -22,11 +22,16 @@ export class CityCurrent extends Component {
       isFlipped: false,
     };
     this.handleClick = this.handleClick.bind(this);
+    this.dayOfWeekAsString = this.dayOfWeekAsString.bind(this);
   }
 
   handleClick(event) {
     event.preventDefault();
     this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));
+  }
+
+  dayOfWeekAsString(dayIndex) {
+    return ["Mon","Tues","Wed","Thurs","Fri","Sat","Sun"][dayIndex];
   }
 
   async componentDidMount() {
@@ -57,16 +62,22 @@ export class CityCurrent extends Component {
       var xx = new Date();
       xx.setTime(timestamp * 1000);
       let day= xx.getDay();
-      console.log(day)
+      let dayStr = this.dayOfWeekAsString(day)
+      if(i===0){
+        dayStr='Tomorrow';
+      }
+      const temp = Math.floor(this.props.city[1].list[i].main.temp)
+
       listElements.push(
-        <ListGroup.Item key={this.props.city[1].list[i].dt}>
-          <img
+        <ListGroup.Item key={this.props.city[1].list[i].dt} className={classNames.ListGroupText}>
+          {`${dayStr}:`}<img
             src={`http://openweathermap.org/img/w/${
               this.props.city[1].list[i].weather[0].icon
             }.png`}
             alt="icon"
           />
-          {this.props.city[1].list[i].weather[0].description}
+          {`${this.props.city[1].list[i].weather[0].description} `}
+          ~{temp}&deg;F
         </ListGroup.Item>
       );
     }

@@ -33,7 +33,7 @@ export class Root extends Component {
             </RubberBand>
             <NewCity />
           </Jumbotron>
-          <FavCities key="1" />
+          <FavCities />
         </div>
       </Router>
     );

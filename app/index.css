@@ -40,3 +40,7 @@ https://www.npmjs.com/package/css-loader change loader
   width:100vw;
   background-color:blue;
 }
+
+.ListGroupText{
+  font-size:.77rem;
+}

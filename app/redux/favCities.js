@@ -89,6 +89,7 @@ export const newCity = cityInput => async dispatch => {
     const city = response.data;
     dispatch(gotNewCity(city));
     dispatch(fetchCurrentWeather());
+    dispatch(fetchAllWeather());
   } catch (err) {
     console.error(err);
   }
