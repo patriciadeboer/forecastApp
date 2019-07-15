@@ -1,7 +1,7 @@
 // api/cities.js
 const router = require('express').Router();
 const Cities = require('../db/cities');
-require('../../secrets');
+// require('../../secrets');
 const axios = require('axios');
 
 router.get('/', async (req, res, next) => {
