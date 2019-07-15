@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import FavCities from './FavCities';
-import { fetchCurrentWeather, fetchCities,fetchAllWeather } from '../redux/favCities';
+import { fetchCities,fetchAllWeather } from '../redux/favCities';
 import { connect } from 'react-redux';
 import { rubberBand } from 'react-animations';
 import styled, { keyframes } from 'styled-components';
@@ -17,7 +17,6 @@ const RubberBand = styled.div`
 export class Root extends Component {
   componentDidMount() {
     this.props.fetchAllCities();
-    // this.props.fetchAllCurrentWeather();
     this.props.fetchAllWeather();
   }
   render() {
@@ -47,7 +46,6 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchAllCities: () => dispatch(fetchCities()),
-    // fetchAllCurrentWeather: () => dispatch(fetchCurrentWeather()),
     fetchAllWeather:()=>dispatch(fetchAllWeather())
   };
 };

@@ -34,6 +34,11 @@ const seed = async () => {
       country: 'TR',
     });
 
+    const newOrleans = await Cities.create({
+      city: 'New Orleans',
+      country: 'US',
+    });
+
     const universal = await Attractions.create({
       name: 'Universal Studios',
     });

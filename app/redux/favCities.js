@@ -91,7 +91,6 @@ export const fetchAllWeather = () => async dispatch => {
 
 export const newCity = cityInput => async dispatch => {
   try {
-    console.log(cityInput);
     const response = await Axios.post('/api/cities', cityInput);
     const city = response.data;
     dispatch(gotNewCity(city));

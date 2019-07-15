@@ -4,6 +4,11 @@ import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import { newCity, fetchCurrentWeather } from '../redux/favCities';
 import ReactLoading from 'react-loading';
+import { bounce } from 'react-animations';
+import styled, { keyframes } from 'styled-components';
+
+const Bounce = styled.div`
+  animation: 2s ${keyframes`${bounce}`} infinite`;
 
 export class NewCity extends Component {
   constructor() {
@@ -27,24 +32,17 @@ export class NewCity extends Component {
     event.preventDefault();
     this.setState({ loading: true });
     this.props.addCity(this.state);
-
-    // const newCity = this.state.city;
-    // const newCountry = this.state.country==='' ? this.state.country : 'US';
-    // await this.props.addCity(this.state);
     this.setState({
       country: '',
       city: '',
       loading: false
     });
   }
-  // componentDidMount() {
-  //   this.setState({ loading: false });
-  // }
 
   render() {
     return (
       <div>
-        <h4>Start tracking a new city:</h4>
+        <Bounce><h4>Start tracking a new city:</h4></Bounce>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label>City:</Form.Label>
@@ -86,8 +84,7 @@ export class NewCity extends Component {
 
 const mapDispatch = dispatch => {
   return {
-    addCity: cityInput => dispatch(newCity(cityInput)),
-    updateWeather: () => dispatch(fetchCurrentWeather()),
+    addCity: cityInput => dispatch(newCity(cityInput))
   };
 };
 
