@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
+    "start": "node server && webpack",
     "start-dev": "webpack -w & nodemon server",
     "start-server": "nodemon main.js -e html,js,css --ignore public",
     "build-watch": "webpack -w",
+    "build": "webpack",
     "seed": "node seed.js"
   },
   "author": "",
