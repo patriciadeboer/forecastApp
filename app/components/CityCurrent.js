@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Collapse, Jumbotron, ListGroup } from 'react-bootstrap';
-// require('../../secrets');
+require('../../secrets');
 import React, { Component } from 'react';
 import Axios from 'axios';
 import './CityCurrent.css';
