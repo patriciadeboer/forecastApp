@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Collapse, Jumbotron } from 'react-bootstrap';
-// require('../../secrets');
+require('../../secrets');
 import React, { Component } from 'react';
 import Axios from 'axios';
 import './CityCurrent.css';
@@ -23,7 +23,7 @@ export class CityCurrent extends Component {
     const { data } = await Axios.get(
       `https://api.unsplash.com/search/photos?page=1&query=${
         this.props.city.name
-      }&orientation=landscape&client_id=${process.env.PICSID}`
+      }&orientation=landscape&client_id=fec98c1e35c9a4ba7c6f5473831e9308710adaabd020d55de8ab8d694ef4f427`
     );
     //console.log(data);
     // console.log(data.results[0].urls.small)
