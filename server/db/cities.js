@@ -15,4 +15,9 @@ const Cities = db.define('cities',{
   }
 });
 
+Cities.beforeValidate((cities) => {
+  cities.city = `${cities.city[0].toUpperCase()}${cities.city.slice(1)}`
+})
+
+
 module.exports= Cities;
